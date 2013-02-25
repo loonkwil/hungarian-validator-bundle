@@ -1,0 +1,27 @@
+{
+    "name": "spe/extra-validator",
+    "description": "Symfony2 bundle a Magyarorszagon hasznalt hivatalos adatok (ugy mint: szemelyi szam, adoazonosito jel...) validalasara",
+    "homepage": "https://github.com/loonkwil/extra-validator",
+    "type": "symfony-bundle",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git://github.com/loonkwil/extra-validator.git"
+        }
+    ],
+    "authors": [
+        {
+            "name": "Peter Simon",
+            "email": "simonpepe@gmail.com"
+        }
+    ],
+    "require":      {
+        "php": ">=5.3.3",
+        "symfony/validator": "2.1.*"
+    },
+    "autoload": {
+        "psr-0": { "SPE\\ExtraValidatorBundle": "" }
+    },
+    "target-dir": "SPE/ExtraValidatorBundle"
+}
+

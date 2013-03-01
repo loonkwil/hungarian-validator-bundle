@@ -10,7 +10,7 @@ class VatNumberValidator extends ConstraintValidator
 {
     protected $pattern = '/^[0-9]{8}[\- ]?[1-5][\- ]?(?:51|4[0-4]|3[0-9]|2[02-9]|1[0-9]|0[2-9])$/';
 
-    public function isValid($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint)
     {
         if( null === $value || '' === $value ) {
             return;
@@ -26,7 +26,7 @@ class VatNumberValidator extends ConstraintValidator
         $ret = $this->checkVatNumber($value);
 
         if( !$ret ) {
-            $this->setMessage($constraint->message);
+            $this->context->addViolation($constraint->message);
         }
 
         return $ret;

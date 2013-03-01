@@ -10,7 +10,7 @@ class PersonalIdCardNumberValidator extends ConstraintValidator
 {
     protected $pattern = '/^[0-9]{6}[\- ]?[a-zA-Z]{2}$/';
 
-    public function isValid($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint)
     {
         if( null === $value || '' === $value ) {
             return;
@@ -26,7 +26,7 @@ class PersonalIdCardNumberValidator extends ConstraintValidator
         $ret = $this->checkPersonalIdCardNumber($value);
 
         if( !$ret ) {
-            $this->setMessage($constraint->message);
+            $this->context->addViolation($constraint->message);
         }
 
         return $ret;

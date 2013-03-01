@@ -10,7 +10,7 @@ class PersonalIdValidator extends ConstraintValidator
 {
     protected $pattern = '/^([1-8])[\- ]?([0-9]{2}(?:0[1-9]|1[12])(?:0[1-9]|[12][0-9]|3[01]))[\- ]?([0-9]{3})([0-9])$/';
 
-    public function isValid($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint)
     {
         if( null === $value || '' === $value ) {
             return;
@@ -26,7 +26,7 @@ class PersonalIdValidator extends ConstraintValidator
         $ret = $this->checkPersonalId($value);
 
         if( !$ret ) {
-            $this->setMessage($constraint->message);
+            $this->context->addViolation($constraint->message);
         }
 
         return $ret;

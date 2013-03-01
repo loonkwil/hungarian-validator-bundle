@@ -11,7 +11,7 @@ class TaxIdValidator extends ConstraintValidator
     // Csak a 1921-10-05 es 2031-04-10 kozotti datumokat fogadja el!
     protected $pattern = '/^(8)[\- ]?([2-5][0-9]{4})[\- ]?([0-9]{3})[\- ]?([0-9])$/';
 
-    public function isValid($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint)
     {
         if( null === $value || '' === $value ) {
             return;
@@ -27,7 +27,7 @@ class TaxIdValidator extends ConstraintValidator
         $ret = $this->checkTaxId($value);
 
         if( !$ret ) {
-            $this->setMessage($constraint->message);
+            $this->context->addViolation($constraint->message);
         }
 
         return $ret;

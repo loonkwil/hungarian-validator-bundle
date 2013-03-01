@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraint;
 /**
  * @Annotation
  */
-class PersonalIdCardNumber extends Constraint
+class IdCardNumber extends Constraint
 {
     public $message = "It is not a valid personal ID card number";
 

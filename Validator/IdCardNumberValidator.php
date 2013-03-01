@@ -9,20 +9,20 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class IdCardNumberValidator extends ConstraintValidator
 {
     /**
-     * @type string $newPattern Minta az uj tipusu (muanyag) kartyak
+     * @var string $newPattern Minta az uj tipusu (muanyag) kartyak
      *     ellenorzesere
      */
     protected $newPattern = '/^[0-9]{6}[\- ]?[a-zA-Z]{2}$/';
 
     /**
-     * @type string $oldPatter Minta a regi (kemeny fedeles) kartyak
+     * @var string $oldPatter Minta a regi (kemeny fedeles) kartyak
      *     ellenorzesere. 2016. december 31-ig meg ervenyben vannak
      */
     protected $oldPattern = '/[a-zA-Z]{2}[\- ]?(?:([A-Z]+)[\- ]?)?[0-9]{6}/';
 
     /**
      * from: http://stackoverflow.com/questions/267399/how-do-you-match-only-valid-roman-numerals-with-a-regular-expression
-     * @type string $romanNumbers Minta a romai szamok ellenorzesere
+     * @var string $romanNumbers Minta a romai szamok ellenorzesere
      */
     protected $romanNumbers = '/^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/';
 

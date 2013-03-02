@@ -82,4 +82,30 @@ class ZipCodeValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->validate('0123', $constraint);
     }
+
+    public function testInvalidZipCode3()
+    {
+        $constraint = new ZipCode(array(
+            'message' => 'myMessage',
+        ));
+
+        $this->context->expects($this->once())
+            ->method('addViolation')
+            ->with('myMessage');
+
+        $this->validator->validate('1003', $constraint);
+    }
+
+    public function testInvalidZipCode4()
+    {
+        $constraint = new ZipCode(array(
+            'message' => 'myMessage',
+        ));
+
+        $this->context->expects($this->once())
+            ->method('addViolation')
+            ->with('myMessage');
+
+        $this->validator->validate('1243', $constraint);
+    }
 }

@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ZipCodeValidator extends ConstraintValidator
 {
-    protected $pattern = '/^[1-9][0-9]{3}$/';
+    protected $pattern = '/^(?:1(?:[01][1-9]|2[1-3])[0-9]|[2-9][0-9]{3})$/';
 
     public function validate($value, Constraint $constraint)
     {

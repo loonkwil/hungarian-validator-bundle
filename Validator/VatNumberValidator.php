@@ -23,13 +23,9 @@ class VatNumberValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, 'string');
         }
 
-        $ret = $this->checkVatNumber($value);
-
-        if( !$ret ) {
+        if( !$this->checkVatNumber($value) ) {
             $this->context->addViolation($constraint->message);
         }
-
-        return $ret;
     }
 
     /**

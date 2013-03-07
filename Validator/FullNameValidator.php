@@ -23,13 +23,9 @@ class FullNameValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, 'string');
         }
 
-        $ret = $this->checkFullName($value);
-
-        if( !$ret ) {
+        if( !$this->checkFullName($value) ) {
             $this->context->addViolation($constraint->message);
         }
-
-        return $ret;
     }
 
     private function checkFullName($value)

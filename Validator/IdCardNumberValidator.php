@@ -39,13 +39,9 @@ class IdCardNumberValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, 'string');
         }
 
-        $ret = $this->checkIdCardNumber($value);
-
-        if( !$ret ) {
+        if( !$this->checkIdCardNumber($value) ) {
             $this->context->addViolation($constraint->message);
         }
-
-        return $ret;
     }
 
     /**

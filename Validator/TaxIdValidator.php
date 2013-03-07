@@ -24,13 +24,9 @@ class TaxIdValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, 'string');
         }
 
-        $ret = $this->checkTaxId($value);
-
-        if( !$ret ) {
+        if( !$this->checkTaxId($value) ) {
             $this->context->addViolation($constraint->message);
         }
-
-        return $ret;
     }
 
     /**

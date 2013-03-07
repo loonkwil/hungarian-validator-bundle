@@ -23,13 +23,9 @@ class PersonalIdValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, 'string');
         }
 
-        $ret = $this->checkPersonalId($value);
-
-        if( !$ret ) {
+        if( !$this->checkPersonalId($value) ) {
             $this->context->addViolation($constraint->message);
         }
-
-        return $ret;
     }
 
     /**

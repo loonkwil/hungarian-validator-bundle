@@ -23,13 +23,9 @@ class ZipCodeValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, 'string');
         }
 
-        $ret = $this->checkZipCode($value);
-
-        if( !$ret ) {
+        if( !$this->checkZipCode($value) ) {
             $this->context->addViolation($constraint->message);
         }
-
-        return $ret;
     }
 
     /**

@@ -1,19 +1,19 @@
-# Installálás
+# Hungarian Validator Bundle
+
+[![Build Status](https://travis-ci.org/loonkwil/hungarian-validator-bundle.png)](https://travis-ci.org/loonkwil/hungarian-validator-bundle)
+
+## Installálás
 
 composer.json fájlba:
 ```json
 "repositories": [
-    ...
     {
         "type": "vcs",
         "url": "https://github.com/loonkwil/hungarian-validator-bundle.git"
     },
-    ...
 ],
 "require": {
-    ...
     "spe/hungarian-validator-bundle": "dev-master",
-    ...
 }
 ```
 
@@ -21,7 +21,7 @@ composer.json fájlba:
 php composer.phar update
 ```
 
-# Használata
+## Használata
 
 ```php
 <?php
@@ -35,11 +35,11 @@ class AcmeEntity {
    */
   protected $personal_id;
 
-  ...
+  // ...
 }
 ```
 
-# Elérhető validátorok
+## Elérhető validátorok
 
  * Irányítószám (ZipCode)
  * Adószám (VatNumber)

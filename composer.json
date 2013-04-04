@@ -1,12 +1,12 @@
 {
-    "name": "spe/extra-validator",
+    "name": "spe/hungarian-validator-bundle",
     "description": "Symfony2 bundle a Magyarorszagon hasznalt hivatalos adatok (ugy mint: szemelyi szam, adoazonosito jel...) validalasara",
-    "homepage": "https://github.com/loonkwil/extra-validator",
+    "homepage": "https://github.com/loonkwil/hungarian-validator-bundle",
     "type": "symfony-bundle",
     "repositories": [
         {
             "type": "git",
-            "url": "git://github.com/loonkwil/extra-validator.git"
+            "url": "git://github.com/loonkwil/hungarian-validator-bundle.git"
         }
     ],
     "authors": [
@@ -20,8 +20,7 @@
         "symfony/validator": "2.*"
     },
     "autoload": {
-        "psr-0": { "SPE\\ExtraValidatorBundle": "" }
+        "psr-0": { "SPE\\HungarianValidatorBundle": "" }
     },
-    "target-dir": "SPE/ExtraValidatorBundle"
+    "target-dir": "SPE/HungarianValidatorBundle"
 }
-

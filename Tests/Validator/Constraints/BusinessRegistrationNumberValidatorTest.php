@@ -1,9 +1,9 @@
 <?php
 
-namespace SPE\ExtraValidatorBundle\Tests\Validator\Constraints;
+namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 
-use SPE\ExtraValidatorBundle\Validator\BusinessRegistrationNumber;
-use SPE\ExtraValidatorBundle\Validator\BusinessRegistrationNumberValidator;
+use SPE\HungarianValidatorBundle\Validator\BusinessRegistrationNumber;
+use SPE\HungarianValidatorBundle\Validator\BusinessRegistrationNumberValidator;
 
 class BusinessRegistrationNumberValidatorTest extends \PHPUnit_Framework_TestCase
 {

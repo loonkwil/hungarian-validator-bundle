@@ -1,9 +1,9 @@
 <?php
 
-namespace SPE\ExtraValidatorBundle\Tests\Validator\Constraints;
+namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 
-use SPE\ExtraValidatorBundle\Validator\TaxId;
-use SPE\ExtraValidatorBundle\Validator\TaxIdValidator;
+use SPE\HungarianValidatorBundle\Validator\TaxId;
+use SPE\HungarianValidatorBundle\Validator\TaxIdValidator;
 
 class TaxIdValidatorTest extends \PHPUnit_Framework_TestCase
 {

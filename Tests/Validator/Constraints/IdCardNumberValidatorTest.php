@@ -1,9 +1,9 @@
 <?php
 
-namespace SPE\ExtraValidatorBundle\Tests\Validator\Constraints;
+namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 
-use SPE\ExtraValidatorBundle\Validator\IdCardNumber;
-use SPE\ExtraValidatorBundle\Validator\IdCardNumberValidator;
+use SPE\HungarianValidatorBundle\Validator\IdCardNumber;
+use SPE\HungarianValidatorBundle\Validator\IdCardNumberValidator;
 
 class IdCardNumberValidatorTest extends \PHPUnit_Framework_TestCase
 {

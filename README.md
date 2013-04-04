@@ -1,23 +1,23 @@
 # Installálás
 
 composer.json fájlba:
-```
+```json
 "repositories": [
     ...
     {
         "type": "vcs",
-        "url": "https://github.com/loonkwil/extra-validator.git"
+        "url": "https://github.com/loonkwil/hungarian-validator-bundle.git"
     },
     ...
 ],
 "require": {
     ...
-    "spe/extra-validator": "dev-master",
+    "spe/hungarian-validator-bundle": "dev-master",
     ...
 }
 ```
 
-```
+```bash
 php composer.phar update
 ```
 
@@ -27,14 +27,24 @@ php composer.phar update
 <?php
 namespace Acme\AcmeDemoBundle\Entity;
 
-use SPE\ExtraValidatorBundle\Validator as ExtraAssert;
+use SPE\HungarianValidatorBundle\Validator as HungarianAssert;
 
 class AcmeEntity {
   /**
-   * @ExtraAssert\PersonalId(message="Hibás személyi szám")
+   * @HungarianAssert\PersonalId(message="Hibás személyi szám")
    */
   protected $personal_id;
 
   ...
 }
 ```
+
+# Elérhető validátorok
+
+ * Irányítószám (ZipCode)
+ * Adószám (VatNumber)
+ * Adóazonosító jel (TaxId)
+ * Személyi szám (PersonalId)
+ * Személyazonosító igazolvány (kártya) szám (IdCardNumber)
+ * Teljes név (FullName)
+ * Cégjegyzékszám (BusinessRegistrationNumber)

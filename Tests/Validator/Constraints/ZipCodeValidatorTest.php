@@ -1,9 +1,9 @@
 <?php
 
-namespace SPE\ExtraValidatorBundle\Tests\Validator\Constraints;
+namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 
-use SPE\ExtraValidatorBundle\Validator\ZipCode;
-use SPE\ExtraValidatorBundle\Validator\ZipCodeValidator;
+use SPE\HungarianValidatorBundle\Validator\ZipCode;
+use SPE\HungarianValidatorBundle\Validator\ZipCodeValidator;
 
 class ZipCodeValidatorTest extends \PHPUnit_Framework_TestCase
 {

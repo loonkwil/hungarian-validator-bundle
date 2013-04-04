@@ -14,7 +14,7 @@
     bootstrap                   = "./Tests/bootstrap.php" >
 
     <testsuites>
-        <testsuite name="SPEExtraValidatorBundle Test Suite">
+        <testsuite name="SPEHungarianValidatorBundle Test Suite">
             <directory>./Tests</directory>
         </testsuite>
     </testsuites>

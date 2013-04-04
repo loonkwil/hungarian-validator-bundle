@@ -1,9 +1,9 @@
 <?php
 
-namespace SPE\ExtraValidatorBundle\Tests\Validator\Constraints;
+namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 
-use SPE\ExtraValidatorBundle\Validator\VatNumber;
-use SPE\ExtraValidatorBundle\Validator\VatNumberValidator;
+use SPE\HungarianValidatorBundle\Validator\VatNumber;
+use SPE\HungarianValidatorBundle\Validator\VatNumberValidator;
 
 class VatNumberValidatorTest extends \PHPUnit_Framework_TestCase
 {

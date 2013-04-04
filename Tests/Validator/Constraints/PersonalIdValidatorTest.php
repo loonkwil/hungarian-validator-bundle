@@ -1,9 +1,9 @@
 <?php
 
-namespace SPE\ExtraValidatorBundle\Tests\Validator\Constraints;
+namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 
-use SPE\ExtraValidatorBundle\Validator\PersonalId;
-use SPE\ExtraValidatorBundle\Validator\PersonalIdValidator;
+use SPE\HungarianValidatorBundle\Validator\PersonalId;
+use SPE\HungarianValidatorBundle\Validator\PersonalIdValidator;
 
 class PersonalIdValidatorTest extends \PHPUnit_Framework_TestCase
 {

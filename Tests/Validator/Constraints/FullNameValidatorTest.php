@@ -1,9 +1,9 @@
 <?php
 
-namespace SPE\ExtraValidatorBundle\Tests\Validator\Constraints;
+namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 
-use SPE\ExtraValidatorBundle\Validator\FullName;
-use SPE\ExtraValidatorBundle\Validator\FullNameValidator;
+use SPE\HungarianValidatorBundle\Validator\FullName;
+use SPE\HungarianValidatorBundle\Validator\FullNameValidator;
 
 class FullNameValidatorTest extends \PHPUnit_Framework_TestCase
 {

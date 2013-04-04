@@ -1,12 +1,19 @@
 <?php
 
-namespace SPE\ExtraValidatorBundle\Validator;
+namespace SPE\HungarianValidatorBundle\Validator;
 
-use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-
-class IdCardNumberValidator extends ConstraintValidator
+/**
+ * szemelyazonosito igazolvany (kartya) szam ellenorzese
+ *
+ * formatuma:
+ *     uj (muanyag) kartya: 6 szamjegy + 2 betu, pl.: 123456AA
+ *     regi (kemeny fedeles) kartya:
+ *         2 betu + szokoz + 6 szamjegy, pl.: AE 232323
+ *         2 betu + kotojel + romai szam + szokoz + 6 szamjegy, pl.: AU-I 123456
+ *
+ * http://www.telenor.hu/sugo/netshop/Page13.html
+ */
+class IdCardNumberValidator extends HungarianValidator
 {
     /**
      * @var string $newPattern Minta az uj tipusu (muanyag) kartyak
@@ -26,36 +33,7 @@ class IdCardNumberValidator extends ConstraintValidator
      */
     protected $romanNumbers = '/^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/';
 
-    public function validate($value, Constraint $constraint)
-    {
-        if( null === $value || '' === $value ) {
-            return;
-        }
-
-        if(
-            !is_scalar($value) && !(is_object($value) &&
-            method_exists($value, '__toString'))
-        ) {
-            throw new UnexpectedTypeException($value, 'string');
-        }
-
-        if( !$this->checkIdCardNumber($value) ) {
-            $this->context->addViolation($constraint->message);
-        }
-    }
-
-    /**
-     * szemelyazonosito igazolvany (kartya) szam ellenorzese
-     *
-     * formatuma:
-     *     uj (muanyag) kartya: 6 szamjegy + 2 betu, pl.: 123456AA
-     *     regi (kemeny fedeles) kartya:
-     *         2 betu + szokoz + 6 szamjegy, pl.: AE 232323
-     *         2 betu + kotojel + romai szam + szokoz + 6 szamjegy, pl.: AU-I 123456
-     *
-     * http://www.telenor.hu/sugo/netshop/Page13.html
-     */
-    private function checkIdCardNumber($value)
+    protected function check($value)
     {
         // uj tipusu kartya
         if( preg_match($this->newPattern, $value) ) {

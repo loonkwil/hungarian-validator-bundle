@@ -20,7 +20,18 @@ namespace SPE\HungarianValidatorBundle\Validator;
  */
 class PersonalIdValidator extends HungarianValidator
 {
-    protected $pattern = '/^([1-8])[\- ]?([0-9]{2})(0[1-9]|1[12])(0[1-9]|[12][0-9]|3[01])[\- ]?[0-9]{3}[0-9]$/';
+    protected $pattern = '/
+        ^
+        ([1-8])
+        [\- ]?
+        ([0-9]{2})               # szuletesi ev utolso ket jegye
+        (0[1-9]|1[12])           # honap
+        (0[1-9]|[12][0-9]|3[01]) # nap
+        [\- ]?
+        [0-9]{3}
+        [0-9]                    # ellenorzo szam
+        $
+        /x';
 
     protected function check($value)
     {

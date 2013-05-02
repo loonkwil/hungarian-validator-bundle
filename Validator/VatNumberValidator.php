@@ -24,9 +24,22 @@ namespace SPE\HungarianValidatorBundle\Validator;
  * AFA kod = 4 , ebben az esetben az adozo csoportos adoalanyisaganak jelzese;
  * AFA kod = 5 , ez a csoportos adoalanyisag eseten a csoport adoszama.
  *
+ * Az Y helyen igen ritkan elofordulhat 0, amikor a cegbirosag mar kiadta az
+ * adoszamot, de hibas vagy felfuggesztett bejelentkezes miatt az adozo meg
+ * nincs bejegyezve a cegnyilvantartasba. (Ez tehat csak elo-tarsasagi
+ * idoszakban fordulhat elo.)
+ *
  * http://www.partnercontrol.hu/default.asp?page=tudastar&gyp=3
  */
 class VatNumberValidator extends HungarianValidator
 {
-    protected $pattern = '/^[0-9]{8}[\- ]?[1-5][\- ]?(?:51|4[0-4]|3[0-9]|2[02-9]|1[0-9]|0[2-9])$/';
+    protected $pattern = '/
+        ^
+        [0-9]{8}                                   # torzsszam
+        [\- ]?
+        [0-5]                                      # afa kod
+        [\- ]?
+        (?:51|4[0-4]|3[0-9]|2[02-9]|1[0-9]|0[2-9]) # terulet azonosito
+        $
+        /x';
 }

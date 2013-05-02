@@ -14,5 +14,13 @@ namespace SPE\HungarianValidatorBundle\Validator;
  */
 class BusinessRegistrationNumberValidator extends HungarianValidator
 {
-    protected $pattern = '/^(?:[01][0-9]|20)[\- ]?(?:[01][0-9]|2[0-3])[\- ]?[0-9]{6}$/';
+    protected $pattern = '/
+        ^
+        (?:[01][0-9]|20)     # 01-tol 20-ig
+        [\- ]?               # elvalaszo jel
+        (?:[01][0-9]|2[0-3]) # 01-tol 23-ig
+        [\- ]?
+        [0-9]{6}
+        $
+        /x';
 }

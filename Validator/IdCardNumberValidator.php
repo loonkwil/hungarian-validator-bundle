@@ -19,19 +19,35 @@ class IdCardNumberValidator extends HungarianValidator
      * @var string $newPattern Minta az uj tipusu (muanyag) kartyak
      *     ellenorzesere
      */
-    protected $newPattern = '/^[0-9]{6}[\- ]?[a-zA-Z]{2}$/';
+    protected $newPattern = '/
+        ^
+        [0-9]{6}
+        [\- ]?
+        [a-zA-Z]{2}
+        $
+        /x';
 
     /**
+     * A romai szam regex mintaja innen:
+     * http://stackoverflow.com/questions/267399/how-do-you-match-only-valid-roman-numerals-with-a-regular-expression
+     *
      * @var string $oldPatter Minta a regi (kemeny fedeles) kartyak
      *     ellenorzesere. 2016. december 31-ig meg ervenyben vannak
      */
-    protected $oldPattern = '/[a-zA-Z]{2}[\- ]?(?:([A-Z]+)[\- ]?)?[0-9]{6}/';
-
-    /**
-     * from: http://stackoverflow.com/questions/267399/how-do-you-match-only-valid-roman-numerals-with-a-regular-expression
-     * @var string $romanNumbers Minta a romai szamok ellenorzesere
-     */
-    protected $romanNumbers = '/^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/';
+    protected $oldPattern = '/
+        ^
+        [a-zA-Z]{2}
+        [\- ]?
+        (?:                # romai szam
+            M{0,4}         # ezresek
+            CM|CD|D?C{0,3} # szazasok
+            XC|XL|L?X{0,3} # tizesek
+            IX|IV|V?I{0,3} # egyesek
+            [\- ]?
+        )?
+        [0-9]{6}
+        $
+        /x';
 
     protected function check($value)
     {
@@ -49,12 +65,6 @@ class IdCardNumberValidator extends HungarianValidator
             return false;
         }
 
-        // nem tartalmaz romai szamot
-        if( count($matches) !== 2 ) {
-            return true;
-        }
-
-        // romai szam validalasa
-        return preg_match($this->romanNumbers, $matches[1]);
+        return true;
     }
 }

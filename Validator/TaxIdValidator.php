@@ -28,7 +28,18 @@ namespace SPE\HungarianValidatorBundle\Validator;
 class TaxIdValidator extends HungarianValidator
 {
     // Csak a 1921-10-05 es 2031-04-10 kozotti datumokat fogadja el!
-    protected $pattern = '/^8[\- ]?[2-5][0-9]{4}[\- ]?[0-9]{3}[\- ]?[0-9]$/';
+    protected $pattern = '/
+        ^
+        8
+        [\- ]?
+        [2-5][0-9]{4} # 20000-59999, ezert, csak a fent elmitett ket datum kozott
+                      # szuletetteket fogadja el
+        [\- ]?
+        [0-9]{3}
+        [\- ]?
+        [0-9]         # ellenorzo szam
+        $
+        /x';
 
     protected function check($value)
     {

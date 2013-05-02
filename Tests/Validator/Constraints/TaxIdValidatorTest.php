@@ -57,7 +57,7 @@ class TaxIdValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->validate('8 32825 870 6', $constraint);
     }
 
-    public function testValidTaxIdWithLine()
+    public function testValidTaxIdWithDash()
     {
         $this->context->expects($this->never())
             ->method('addViolation');

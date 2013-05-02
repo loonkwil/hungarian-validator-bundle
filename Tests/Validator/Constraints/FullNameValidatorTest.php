@@ -75,7 +75,7 @@ class FullNameValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->validate('Kiss nagy Pippin', $constraint);
     }
 
-    public function testValidFullNameWithLine()
+    public function testValidFullNameWithDash()
     {
         $this->context->expects($this->never())
             ->method('addViolation');

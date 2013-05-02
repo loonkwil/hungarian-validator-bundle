@@ -57,7 +57,7 @@ class IdCardNumberValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->validate('123456 AA', $constraint);
     }
 
-    public function testValidNewIdCardNumberWithLine()
+    public function testValidNewIdCardNumberWithDash()
     {
         $this->context->expects($this->never())
             ->method('addViolation');
@@ -84,7 +84,7 @@ class IdCardNumberValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->validate('AE 232323', $constraint);
     }
 
-    public function testValidOldIdCardNumberWithLine()
+    public function testValidOldIdCardNumberWithDash()
     {
         $this->context->expects($this->never())
             ->method('addViolation');
@@ -111,7 +111,7 @@ class IdCardNumberValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->validate('AU I 123456', $constraint);
     }
 
-    public function testValidOldIdCardNumberWithLineAndRomanNumber()
+    public function testValidOldIdCardNumberWithDashAndRomanNumber()
     {
         $this->context->expects($this->never())
             ->method('addViolation');
@@ -120,7 +120,7 @@ class IdCardNumberValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->validate('AU-I-123456', $constraint);
     }
 
-    public function testValidOldIdCardNumberWithLineSpaceAndRomanNumber()
+    public function testValidOldIdCardNumberWithDashSpaceAndRomanNumber()
     {
         $this->context->expects($this->never())
             ->method('addViolation');

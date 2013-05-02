@@ -57,7 +57,7 @@ class PersonalIdValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->validate('3 110714 1231', $constraint);
     }
 
-    public function testValidPersonalIdWithLine()
+    public function testValidPersonalIdWithDash()
     {
         $this->context->expects($this->never())
             ->method('addViolation');

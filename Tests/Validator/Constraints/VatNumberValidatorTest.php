@@ -57,7 +57,7 @@ class VatNumberValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->validate('10136915 4 44', $constraint);
     }
 
-    public function testValidVatNumberWithLine()
+    public function testValidVatNumberWithDash()
     {
         $this->context->expects($this->never())
             ->method('addViolation');

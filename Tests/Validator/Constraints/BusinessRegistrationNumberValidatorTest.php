@@ -48,7 +48,7 @@ class BusinessRegistrationNumberValidatorTest extends \PHPUnit_Framework_TestCas
         $this->validator->validate(new \stdClass(), new BusinessRegistrationNumber());
     }
 
-    public function testValidBusinessRegistrationNumberWithLine()
+    public function testValidBusinessRegistrationNumberWithDash()
     {
         $this->context->expects($this->never())
             ->method('addViolation');

@@ -6,14 +6,16 @@
 
 composer.json fájlba:
 ```json
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/loonkwil/hungarian-validator-bundle.git"
-    },
-],
-"require": {
-    "spe/hungarian-validator-bundle": "dev-master",
+{
+  "repositories": [
+      {
+          "type": "vcs",
+          "url": "https://github.com/loonkwil/hungarian-validator-bundle.git"
+      },
+  ],
+  "require": {
+      "spe/hungarian-validator-bundle": "dev-master",
+  }
 }
 ```
 

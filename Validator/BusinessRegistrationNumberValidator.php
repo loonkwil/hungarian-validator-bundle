@@ -5,10 +5,10 @@ namespace SPE\HungarianValidatorBundle\Validator;
 /**
  * cegjegyzekszam ellenorzese
  *
- * A BS-CF-NNNNNN formátumú cégjegyzékszám három jól elkülöníthető részből áll:
- * BS a céget nyilvántartó bíróság két számjegyű sorszáma,
- * CF a cégformára utaló két számjegyű jelzőszám,
- * NNNNNN pedig a cégjegyzéket vezető bíróságon kiadott hat számjegyből álló sorszám.
+ * A BS-CF-NNNNNN formatumu cegjegyzekszam harom jol elkulonitheto reszbol all:
+ * BS a ceget nyilvantarto birosag ket szamjegyu sorszama,
+ * CF a cegformara utalo ket szamjegyu jelzoszam,
+ * NNNNNN pedig a cegjegyzeket vezeto birosagon kiadott hat szamjegybol allo sorszam.
  *
  * http://hu.wikipedia.org/wiki/C%C3%A9gjegyz%C3%A9ksz%C3%A1mok_Magyarorsz%C3%A1gon
  */

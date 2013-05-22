@@ -5,114 +5,48 @@ namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 use SPE\HungarianValidatorBundle\Validator\VatNumber;
 use SPE\HungarianValidatorBundle\Validator\VatNumberValidator;
 
-class VatNumberValidatorTest extends \PHPUnit_Framework_TestCase
-{
-    protected $context;
-    protected $validator;
+use SPE\HungarianValidatorBundle\Tests\Validator\ValidatorTest;
 
+class VatNumberValidatorTest extends ValidatorTest
+{
     protected function setUp()
     {
-        $this->context = $this->getMock('Symfony\Component\Validator\ExecutionContext', array(), array(), '', false);
+        parent::setUp();
+
         $this->validator = new VatNumberValidator();
         $this->validator->initialize($this->context);
+
+        $this->constraint = new VatNumber(array('message' => $this->message));
     }
 
-    protected function tearDown()
-    {
-        $this->context = null;
-        $this->validator = null;
-    }
-
-
-    public function testNullIsValid()
-    {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $this->validator->validate(null, new VatNumber());
-    }
-
-    public function testEmptyStringIsValid()
-    {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $this->validator->validate('', new VatNumber());
-    }
-
-    /**
-     * @expectedException Symfony\Component\Validator\Exception\UnexpectedTypeException
-     */
-    public function testExpectsStringCompatibleType()
-    {
-        $this->validator->validate(new \stdClass(), new VatNumber());
-    }
 
     public function testValidVatNumberWithSpace()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new VatNumber();
-        $this->validator->validate('10136915 4 44', $constraint);
+        $this->shouldBeValid('10136915 4 44');
     }
 
     public function testValidVatNumberWithDash()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new VatNumber();
-        $this->validator->validate('10136915-4-44', $constraint);
+        $this->shouldBeValid('10136915-4-44');
     }
 
     public function testValidVatNumber()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new VatNumber();
-        $this->validator->validate('10136915444', $constraint);
+        $this->shouldBeValid('10136915444');
     }
 
     public function testInvalidFormat()
     {
-        $constraint = new VatNumber(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('1013691-4-44', $constraint);
+        $this->shouldNotBeValid('1013691-4-44');
     }
 
     public function testInvalidEnd()
     {
-        $constraint = new VatNumber(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('10136915-4-60', $constraint);
+        $this->shouldNotBeValid('10136915-4-60');
     }
 
     public function testInvalidMiddle()
     {
-        $constraint = new VatNumber(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('10136915-6-60', $constraint);
+        $this->shouldNotBeValid('10136915-6-60');
     }
 }
-
-

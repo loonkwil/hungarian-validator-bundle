@@ -5,201 +5,93 @@ namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 use SPE\HungarianValidatorBundle\Validator\IdCardNumber;
 use SPE\HungarianValidatorBundle\Validator\IdCardNumberValidator;
 
-class IdCardNumberValidatorTest extends \PHPUnit_Framework_TestCase
-{
-    protected $context;
-    protected $validator;
+use SPE\HungarianValidatorBundle\Tests\Validator\ValidatorTest;
 
+class IdCardNumberValidatorTest extends ValidatorTest
+{
     protected function setUp()
     {
-        $this->context = $this->getMock('Symfony\Component\Validator\ExecutionContext', array(), array(), '', false);
+        parent::setUp();
+
         $this->validator = new IdCardNumberValidator();
         $this->validator->initialize($this->context);
+
+        $this->constraint = new IdCardNumber(array('message' => $this->message));
     }
 
-    protected function tearDown()
-    {
-        $this->context = null;
-        $this->validator = null;
-    }
-
-
-    public function testNullIsValid()
-    {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $this->validator->validate(null, new IdCardNumber());
-    }
-
-    public function testEmptyStringIsValid()
-    {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $this->validator->validate('', new IdCardNumber());
-    }
-
-    /**
-     * @expectedException Symfony\Component\Validator\Exception\UnexpectedTypeException
-     */
-    public function testExpectsStringCompatibleType()
-    {
-        $this->validator->validate(new \stdClass(), new IdCardNumber());
-    }
 
     public function testValidNewIdCardNumberWithSpace()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new IdCardNumber();
-        $this->validator->validate('123456 AA', $constraint);
+        $this->shouldBeValid('123456 AA');
     }
 
     public function testValidNewIdCardNumberWithDash()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new IdCardNumber();
-        $this->validator->validate('123456-AA', $constraint);
+        $this->shouldBeValid('123456-AA');
     }
 
     public function testValidNewIdCardNumber()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new IdCardNumber();
-        $this->validator->validate('123456AA', $constraint);
+        $this->shouldBeValid('123456AA');
     }
 
     public function testValidOldIdCardNumberWithSpace()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new IdCardNumber();
-        $this->validator->validate('AE 232323', $constraint);
+        $this->shouldBeValid('AE 232323');
     }
 
     public function testValidOldIdCardNumberWithDash()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new IdCardNumber();
-        $this->validator->validate('AE-232323', $constraint);
+        $this->shouldBeValid('AE-232323');
     }
 
     public function testValidOldIdCardNumber()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new IdCardNumber();
-        $this->validator->validate('AE232323', $constraint);
+        $this->shouldBeValid('AE232323');
     }
 
     public function testValidOldIdCardNumberWithSpaceAndRomanNumber()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new IdCardNumber();
-        $this->validator->validate('AU I 123456', $constraint);
+        $this->shouldBeValid('AU I 123456');
     }
 
     public function testValidOldIdCardNumberWithDashAndRomanNumber()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new IdCardNumber();
-        $this->validator->validate('AU-I-123456', $constraint);
+        $this->shouldBeValid('AU-I-123456');
     }
 
     public function testValidOldIdCardNumberWithDashSpaceAndRomanNumber()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new IdCardNumber();
-        $this->validator->validate('AU-I 123456', $constraint);
+        $this->shouldBeValid('AU-I 123456');
     }
 
     public function testValidOldIdCardNumberWithRomanNumber()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new IdCardNumber();
-        $this->validator->validate('AUI123456', $constraint);
+        $this->shouldBeValid('AUI123456');
     }
 
     public function testInvalidNewFormat()
     {
-        $constraint = new IdCardNumber(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('123456A', $constraint);
+        $this->shouldNotBeValid('123456A');
     }
 
     public function testInvalidOldFormat()
     {
-        $constraint = new IdCardNumber(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('AE 23232', $constraint);
+        $this->shouldNotBeValid('AE 23232');
     }
 
     public function testInvalidOldFormatWithRomanNumber()
     {
-        $constraint = new IdCardNumber(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('AU-I 12456', $constraint);
+        $this->shouldNotBeValid('AU-I 12456');
     }
 
     public function testInvalidRomanNumber1()
     {
-        $constraint = new IdCardNumber(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('AU-J 123456', $constraint);
+        $this->shouldNotBeValid('AU-J 123456');
     }
 
     public function testInvalidRomanNumber2()
     {
-        $constraint = new IdCardNumber(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('AU-IIII 123456', $constraint);
+        $this->shouldNotBeValid('AU-IIII 123456');
     }
 }

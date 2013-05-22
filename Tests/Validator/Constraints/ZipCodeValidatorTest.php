@@ -5,107 +5,43 @@ namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 use SPE\HungarianValidatorBundle\Validator\ZipCode;
 use SPE\HungarianValidatorBundle\Validator\ZipCodeValidator;
 
-class ZipCodeValidatorTest extends \PHPUnit_Framework_TestCase
-{
-    protected $context;
-    protected $validator;
+use SPE\HungarianValidatorBundle\Tests\Validator\ValidatorTest;
 
+class ZipCodeValidatorTest extends ValidatorTest
+{
     protected function setUp()
     {
-        $this->context = $this->getMock('Symfony\Component\Validator\ExecutionContext', array(), array(), '', false);
+        parent::setUp();
+
         $this->validator = new ZipCodeValidator();
         $this->validator->initialize($this->context);
+
+        $this->constraint = new ZipCode(array('message' => $this->message));
     }
 
-    protected function tearDown()
-    {
-        $this->context = null;
-        $this->validator = null;
-    }
-
-
-    public function testNullIsValid()
-    {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $this->validator->validate(null, new ZipCode());
-    }
-
-    public function testEmptyStringIsValid()
-    {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $this->validator->validate('', new ZipCode());
-    }
-
-    /**
-     * @expectedException Symfony\Component\Validator\Exception\UnexpectedTypeException
-     */
-    public function testExpectsStringCompatibleType()
-    {
-        $this->validator->validate(new \stdClass(), new ZipCode());
-    }
 
     public function testValidZipCode()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new ZipCode();
-        $this->validator->validate('1234', $constraint);
+        $this->shouldBeValid('1234');
     }
 
     public function testInvalidZipCode1()
     {
-        $constraint = new ZipCode(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('12345', $constraint);
+        $this->shouldNotBeValid('12345');
     }
 
     public function testInvalidZipCode2()
     {
-        $constraint = new ZipCode(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('0123', $constraint);
+        $this->shouldNotBeValid('0123');
     }
 
     public function testInvalidZipCode3()
     {
-        $constraint = new ZipCode(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('1003', $constraint);
+        $this->shouldNotBeValid('1003');
     }
 
     public function testInvalidZipCode4()
     {
-        $constraint = new ZipCode(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('1243', $constraint);
+        $this->shouldNotBeValid('1243');
     }
 }

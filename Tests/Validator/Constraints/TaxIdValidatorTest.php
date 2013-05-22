@@ -5,125 +5,53 @@ namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 use SPE\HungarianValidatorBundle\Validator\TaxId;
 use SPE\HungarianValidatorBundle\Validator\TaxIdValidator;
 
-class TaxIdValidatorTest extends \PHPUnit_Framework_TestCase
-{
-    protected $context;
-    protected $validator;
+use SPE\HungarianValidatorBundle\Tests\Validator\ValidatorTest;
 
+class TaxIdValidatorTest extends ValidatorTest
+{
     protected function setUp()
     {
-        $this->context = $this->getMock('Symfony\Component\Validator\ExecutionContext', array(), array(), '', false);
+        parent::setUp();
+
         $this->validator = new TaxIdValidator();
         $this->validator->initialize($this->context);
+
+        $this->constraint = new TaxId(array('message' => $this->message));
     }
 
-    protected function tearDown()
-    {
-        $this->context = null;
-        $this->validator = null;
-    }
-
-
-    public function testNullIsValid()
-    {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $this->validator->validate(null, new TaxId());
-    }
-
-    public function testEmptyStringIsValid()
-    {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $this->validator->validate('', new TaxId());
-    }
-
-    /**
-     * @expectedException Symfony\Component\Validator\Exception\UnexpectedTypeException
-     */
-    public function testExpectsStringCompatibleType()
-    {
-        $this->validator->validate(new \stdClass(), new TaxId());
-    }
 
     public function testValidTaxIdWithSpace()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new TaxId();
-        $this->validator->validate('8 32825 870 6', $constraint);
+        $this->shouldBeValid('8 32825 870 6');
     }
 
     public function testValidTaxIdWithDash()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new TaxId();
-        $this->validator->validate('8-32825-870-6', $constraint);
+        $this->shouldBeValid('8-32825-870-6');
     }
 
     public function testValidTaxId()
     {
-        $this->context->expects($this->never())
-            ->method('addViolation');
-
-        $constraint = new TaxId();
-        $this->validator->validate('8328258706', $constraint);
+        $this->shouldBeValid('8328258706');
     }
 
     public function testInvalidFormat()
     {
-        $constraint = new TaxId(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('832825870', $constraint);
+        $this->shouldNotBeValid('832825870');
     }
 
     public function testInvalidEnd()
     {
-        $constraint = new TaxId(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('8 32825 870 9', $constraint);
+        $this->shouldNotBeValid('8 32825 870 9');
     }
 
     public function testInvalidDate()
     {
-        $constraint = new TaxId(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('8 12825 870 8', $constraint);
+        $this->shouldNotBeValid('8 12825 870 8');
     }
 
     public function testInvalidStart()
     {
-        $constraint = new TaxId(array(
-            'message' => 'myMessage',
-        ));
-
-        $this->context->expects($this->once())
-            ->method('addViolation')
-            ->with('myMessage');
-
-        $this->validator->validate('1 32825 870 8', $constraint);
+        $this->shouldNotBeValid('1 32825 870 8');
     }
 }

@@ -23,6 +23,7 @@ class ZipCodeValidatorTest extends ValidatorTest
     public function testValidZipCode()
     {
         $this->shouldBeValid('1234');
+        $this->shouldBeValid('1106');
     }
 
     public function testInvalidZipCode1()
@@ -33,11 +34,6 @@ class ZipCodeValidatorTest extends ValidatorTest
     public function testInvalidZipCode2()
     {
         $this->shouldNotBeValid('0123');
-    }
-
-    public function testInvalidZipCode3()
-    {
-        $this->shouldNotBeValid('1003');
     }
 
     public function testInvalidZipCode4()

@@ -5,53 +5,50 @@ namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 use SPE\HungarianValidatorBundle\Validator\TaxId;
 use SPE\HungarianValidatorBundle\Validator\TaxIdValidator;
 
-use SPE\HungarianValidatorBundle\Tests\Validator\ValidatorTest;
+use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
-class TaxIdValidatorTest extends ValidatorTest
+class TaxIdValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function setUp()
+    public function createValidator()
     {
-        parent::setUp();
-
-        $this->validator = new TaxIdValidator();
-        $this->validator->initialize($this->context);
-
-        $this->constraint = new TaxId(array('message' => $this->message));
+        return new TaxIdValidator();
     }
 
-
-    public function testValidTaxIdWithSpace()
+    /**
+     * @dataProvider provideInvalidTaxIds
+     */
+    public function testInvalidTaxIds($value)
     {
-        $this->shouldBeValid('8 32825 870 6');
+        $this->validator->validate($value, new TaxId());
+        $this->buildViolation("It is not a valid tax ID")
+            ->assertRaised();
     }
 
-    public function testValidTaxIdWithDash()
+    public function provideInvalidTaxIds()
     {
-        $this->shouldBeValid('8-32825-870-6');
+        return [
+            ['832825870'],
+            ['8 32825 870 9'],
+            ['8 12825 870 8'],
+            ['1 32825 870 8'],
+        ];
     }
 
-    public function testValidTaxId()
+    /**
+     * @dataProvider provideValidTaxIds
+     */
+    public function testValidTaxIds($value)
     {
-        $this->shouldBeValid('8328258706');
+        $this->validator->validate($value, new TaxId());
+        $this->assertNoViolation();
     }
 
-    public function testInvalidFormat()
+    public function provideValidTaxIds()
     {
-        $this->shouldNotBeValid('832825870');
-    }
-
-    public function testInvalidEnd()
-    {
-        $this->shouldNotBeValid('8 32825 870 9');
-    }
-
-    public function testInvalidDate()
-    {
-        $this->shouldNotBeValid('8 12825 870 8');
-    }
-
-    public function testInvalidStart()
-    {
-        $this->shouldNotBeValid('1 32825 870 8');
+        return [
+            ['8 32825 870 6'],
+            ['8-32825-870-6'],
+            ['8328258706'],
+        ];
     }
 }

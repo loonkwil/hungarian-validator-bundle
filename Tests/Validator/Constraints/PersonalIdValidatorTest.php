@@ -5,48 +5,49 @@ namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 use SPE\HungarianValidatorBundle\Validator\PersonalId;
 use SPE\HungarianValidatorBundle\Validator\PersonalIdValidator;
 
-use SPE\HungarianValidatorBundle\Tests\Validator\ValidatorTest;
+use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
-class PersonalIdValidatorTest extends ValidatorTest
+class PersonalIdValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function setUp()
+    public function createValidator()
     {
-        parent::setUp();
-
-        $this->validator = new PersonalIdValidator();
-        $this->validator->initialize($this->context);
-
-        $this->constraint = new PersonalId(array('message' => $this->message));
+        return new PersonalIdValidator();
     }
 
-
-    public function testValidPersonalIdWithSpace()
+    /**
+     * @dataProvider provideInvalidPersonalIds
+     */
+    public function testInvalidPersonalIds($value)
     {
-        $this->shouldBeValid('3 110714 1231');
+        $this->validator->validate($value, new PersonalId());
+        $this->buildViolation("It is not a valid personal ID")
+            ->assertRaised();
     }
 
-    public function testValidPersonalIdWithDash()
+    public function provideInvalidPersonalIds()
     {
-        $this->shouldBeValid('3-110714-1231');
+        return [
+            ['3-110714-122'],
+            ['2 780230 1233'],
+            ['3-110714-1233'],
+        ];
     }
 
-    public function testValidPersonalId()
+    /**
+     * @dataProvider provideValidPersonalIds
+     */
+    public function testValidPersonalIds($value)
     {
-        $this->shouldBeValid('31107141231');
+        $this->validator->validate($value, new PersonalId());
+        $this->assertNoViolation();
     }
 
-    public function testInvalidFormat()
+    public function provideValidPersonalIds()
     {
-        $this->shouldNotBeValid('3-110714-122');
-    }
-
-    public function testInvalidDate()
-    {
-        $this->shouldNotBeValid('2 780230 1233');
-    }
-
-    public function testInvalidCheckSum()
-    {
-        $this->shouldNotBeValid('3-110714-1233');
+        return [
+            ['3 110714 1231'],
+            ['3-110714-1231'],
+            ['31107141231'],
+        ];
     }
 }

@@ -5,39 +5,48 @@ namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 use SPE\HungarianValidatorBundle\Validator\ZipCode;
 use SPE\HungarianValidatorBundle\Validator\ZipCodeValidator;
 
-use SPE\HungarianValidatorBundle\Tests\Validator\ValidatorTest;
+use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
-class ZipCodeValidatorTest extends ValidatorTest
+class ZipCodeValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function setUp()
+    public function createValidator()
     {
-        parent::setUp();
-
-        $this->validator = new ZipCodeValidator();
-        $this->validator->initialize($this->context);
-
-        $this->constraint = new ZipCode(array('message' => $this->message));
+        return new ZipCodeValidator();
     }
 
-
-    public function testValidZipCode()
+    /**
+     * @dataProvider provideInvalidZipCodes
+     */
+    public function testInvalidZipCodes($value)
     {
-        $this->shouldBeValid('1234');
-        $this->shouldBeValid('1106');
+        $this->validator->validate($value, new ZipCode());
+        $this->buildViolation("It is not a valid ZIP code")
+            ->assertRaised();
     }
 
-    public function testInvalidZipCode1()
+    public function provideInvalidZipCodes()
     {
-        $this->shouldNotBeValid('12345');
+        return [
+            ['12345'],
+            ['0123'],
+            ['1243'],
+        ];
     }
 
-    public function testInvalidZipCode2()
+    /**
+     * @dataProvider provideValidZipCodes
+     */
+    public function testValidZipCodes($value)
     {
-        $this->shouldNotBeValid('0123');
+        $this->validator->validate($value, new ZipCode());
+        $this->assertNoViolation();
     }
 
-    public function testInvalidZipCode4()
+    public function provideValidZipCodes()
     {
-        $this->shouldNotBeValid('1243');
+        return [
+            ['1234'],
+            ['1106'],
+        ];
     }
 }

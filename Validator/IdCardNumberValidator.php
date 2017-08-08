@@ -16,10 +16,9 @@ namespace SPE\HungarianValidatorBundle\Validator;
 class IdCardNumberValidator extends HungarianValidator
 {
     /**
-     * @var string $newPattern Minta az uj tipusu (muanyag) kartyak
-     *     ellenorzesere
+     * @var string $pattern Minta az uj tipusu (muanyag) kartyak ellenorzesere
      */
-    protected $newPattern = '/
+    protected $pattern = '/
         ^
         [0-9]{6}
         [\- ]?
@@ -52,19 +51,10 @@ class IdCardNumberValidator extends HungarianValidator
     protected function check($value)
     {
         // uj tipusu kartya
-        if( preg_match($this->newPattern, $value) ) {
+        if( preg_match($this->pattern, $value) ) {
             return true;
         }
 
-        // A regi kartyak csak 2016. december 31-ig ervenyesek
-        if( date('Y') > 2016 ) {
-            return false;
-        }
-
-        if( preg_match($this->oldPattern, $value, $matches) === 0 ) {
-            return false;
-        }
-
-        return true;
+        return false;
     }
 }

@@ -5,93 +5,47 @@ namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 use SPE\HungarianValidatorBundle\Validator\IdCardNumber;
 use SPE\HungarianValidatorBundle\Validator\IdCardNumberValidator;
 
-use SPE\HungarianValidatorBundle\Tests\Validator\ValidatorTest;
+use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
-class IdCardNumberValidatorTest extends ValidatorTest
+class IdCardNumberValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function setUp()
+    public function createValidator()
     {
-        parent::setUp();
-
-        $this->validator = new IdCardNumberValidator();
-        $this->validator->initialize($this->context);
-
-        $this->constraint = new IdCardNumber(array('message' => $this->message));
+        return new IdCardNumberValidator();
     }
 
-
-    public function testValidNewIdCardNumberWithSpace()
+    /**
+     * @dataProvider provideInvalidIdCardNumbers
+     */
+    public function testInvalidIdCardNumbers($value)
     {
-        $this->shouldBeValid('123456 AA');
+        $this->validator->validate($value, new IdCardNumber());
+        $this->buildViolation("It is not a valid personal ID card number")
+            ->assertRaised();
     }
 
-    public function testValidNewIdCardNumberWithDash()
+    public function provideInvalidIdCardNumbers()
     {
-        $this->shouldBeValid('123456-AA');
+        return [
+            ['123456A'],
+        ];
     }
 
-    public function testValidNewIdCardNumber()
+    /**
+     * @dataProvider provideValidIdCardNumbers
+     */
+    public function testValidIdCardNumbers($value)
     {
-        $this->shouldBeValid('123456AA');
+        $this->validator->validate($value, new IdCardNumber());
+        $this->assertNoViolation();
     }
 
-    public function testValidOldIdCardNumberWithSpace()
+    public function provideValidIdCardNumbers()
     {
-        $this->shouldBeValid('AE 232323');
-    }
-
-    public function testValidOldIdCardNumberWithDash()
-    {
-        $this->shouldBeValid('AE-232323');
-    }
-
-    public function testValidOldIdCardNumber()
-    {
-        $this->shouldBeValid('AE232323');
-    }
-
-    public function testValidOldIdCardNumberWithSpaceAndRomanNumber()
-    {
-        $this->shouldBeValid('AU I 123456');
-    }
-
-    public function testValidOldIdCardNumberWithDashAndRomanNumber()
-    {
-        $this->shouldBeValid('AU-I-123456');
-    }
-
-    public function testValidOldIdCardNumberWithDashSpaceAndRomanNumber()
-    {
-        $this->shouldBeValid('AU-I 123456');
-    }
-
-    public function testValidOldIdCardNumberWithRomanNumber()
-    {
-        $this->shouldBeValid('AUI123456');
-    }
-
-    public function testInvalidNewFormat()
-    {
-        $this->shouldNotBeValid('123456A');
-    }
-
-    public function testInvalidOldFormat()
-    {
-        $this->shouldNotBeValid('AE 23232');
-    }
-
-    public function testInvalidOldFormatWithRomanNumber()
-    {
-        $this->shouldNotBeValid('AU-I 12456');
-    }
-
-    public function testInvalidRomanNumber1()
-    {
-        $this->shouldNotBeValid('AU-J 123456');
-    }
-
-    public function testInvalidRomanNumber2()
-    {
-        $this->shouldNotBeValid('AU-IIII 123456');
+        return [
+            ['123456 AA'],
+            ['123456-AA'],
+            ['123456AA'],
+        ];
     }
 }

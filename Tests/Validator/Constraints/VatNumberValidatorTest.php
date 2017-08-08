@@ -5,48 +5,49 @@ namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 use SPE\HungarianValidatorBundle\Validator\VatNumber;
 use SPE\HungarianValidatorBundle\Validator\VatNumberValidator;
 
-use SPE\HungarianValidatorBundle\Tests\Validator\ValidatorTest;
+use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
-class VatNumberValidatorTest extends ValidatorTest
+class VatNumberValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function setUp()
+    public function createValidator()
     {
-        parent::setUp();
-
-        $this->validator = new VatNumberValidator();
-        $this->validator->initialize($this->context);
-
-        $this->constraint = new VatNumber(array('message' => $this->message));
+        return new VatNumberValidator();
     }
 
-
-    public function testValidVatNumberWithSpace()
+    /**
+     * @dataProvider provideInvalidVatNumbers
+     */
+    public function testInvalidVatNumbers($value)
     {
-        $this->shouldBeValid('10136915 4 44');
+        $this->validator->validate($value, new VatNumber());
+        $this->buildViolation("It is not a valid VAT number")
+            ->assertRaised();
     }
 
-    public function testValidVatNumberWithDash()
+    public function provideInvalidVatNumbers()
     {
-        $this->shouldBeValid('10136915-4-44');
+        return [
+            ['1013691-4-44'],
+            ['10136915-4-60'],
+            ['10136915-6-60'],
+        ];
     }
 
-    public function testValidVatNumber()
+    /**
+     * @dataProvider provideValidVatNumbers
+     */
+    public function testValidVatNumbers($value)
     {
-        $this->shouldBeValid('10136915444');
+        $this->validator->validate($value, new VatNumber());
+        $this->assertNoViolation();
     }
 
-    public function testInvalidFormat()
+    public function provideValidVatNumbers()
     {
-        $this->shouldNotBeValid('1013691-4-44');
-    }
-
-    public function testInvalidEnd()
-    {
-        $this->shouldNotBeValid('10136915-4-60');
-    }
-
-    public function testInvalidMiddle()
-    {
-        $this->shouldNotBeValid('10136915-6-60');
+        return [
+            ['10136915 4 44'],
+            ['10136915-4-44'],
+            ['10136915444'],
+        ];
     }
 }

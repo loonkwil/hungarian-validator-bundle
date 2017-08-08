@@ -5,52 +5,50 @@ namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 use SPE\HungarianValidatorBundle\Validator\FullName;
 use SPE\HungarianValidatorBundle\Validator\FullNameValidator;
 
-use SPE\HungarianValidatorBundle\Tests\Validator\ValidatorTest;
+use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
-class FullNameValidatorTest extends ValidatorTest
+class FullNameValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function setUp()
+    public function createValidator()
     {
-        parent::setUp();
-
-        $this->validator = new FullNameValidator();
-        $this->validator->initialize($this->context);
-
-        $this->constraint = new FullName(array('message' => $this->message));
+        return new FullNameValidator();
     }
 
-    public function testValidFullNameWithTwoParts()
+    /**
+     * @dataProvider provideInvalidFullNames
+     */
+    public function testInvalidFullNames($value)
     {
-        $this->shouldBeValid('Kiss Pippin');
+        $this->validator->validate($value, new FullName());
+        $this->buildViolation("Please enter your full name")
+            ->assertRaised();
     }
 
-    public function testValidFullNameWithLocalizedChars()
+    public function provideInvalidFullNames()
     {
-        $this->shouldBeValid('KissőŰú Píppinß');
+        return [
+            ['Péter '],
+        ];
     }
 
-    public function testValidFullNameWithMiddleName()
+    /**
+     * @dataProvider provideValidFullNames
+     */
+    public function testValidFullNames($value)
     {
-        $this->shouldBeValid('Kiss nagy Pippin');
+        $this->validator->validate($value, new FullName());
+        $this->assertNoViolation();
     }
 
-    public function testValidFullNameWithDash()
+    public function provideValidFullNames()
     {
-        $this->shouldBeValid('Kiss-nagy Pippin');
-    }
-
-    public function testValidFullNameWithDot()
-    {
-        $this->shouldBeValid('Dr. prof. Kiss Pippin');
-    }
-
-    public function testValidFullNameWithWhiteSpaces()
-    {
-        $this->shouldBeValid(' Kiss Pippin    ');
-    }
-
-    public function testNotTheFullName()
-    {
-        $this->shouldNotBeValid('Péter ');
+        return [
+            ['Kiss Pippin'],
+            ['KissőŰú Píppinß'],
+            ['Kiss nagy Pippin'],
+            ['Kiss-nagy Pippin'],
+            ['Dr. prof. Kiss Pippin'],
+            [' Kiss Pippin    '],
+        ];
     }
 }

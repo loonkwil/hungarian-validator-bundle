@@ -26,7 +26,8 @@ class HungarianValidator extends ConstraintValidator
 
         $isValid = $this->check($value);
         if( !$isValid ) {
-            $this->context->addViolation($constraint->message);
+            $this->context->buildViolation($constraint->message)
+                ->addViolation();
         }
     }
 

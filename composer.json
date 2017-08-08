@@ -5,8 +5,8 @@
     "type": "symfony-bundle",
     "repositories": [
         {
-            "type": "git",
-            "url": "git://github.com/loonkwil/hungarian-validator-bundle.git"
+            "type": "vcs",
+            "url": "https://github.com/loonkwil/hungarian-validator-bundle"
         }
     ],
     "authors": [
@@ -17,7 +17,7 @@
     ],
     "require":      {
         "php": ">=5.3.3",
-        "symfony/validator": "2.*"
+        "symfony/validator": "^3.2"
     },
     "autoload": {
         "psr-0": { "SPE\\HungarianValidatorBundle": "" }

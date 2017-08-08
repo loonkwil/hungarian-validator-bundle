@@ -5,55 +5,50 @@ namespace SPE\HungarianValidatorBundle\Tests\Validator\Constraints;
 use SPE\HungarianValidatorBundle\Validator\BusinessRegistrationNumber;
 use SPE\HungarianValidatorBundle\Validator\BusinessRegistrationNumberValidator;
 
-use SPE\HungarianValidatorBundle\Tests\Validator\ValidatorTest;
+use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
-class BusinessRegistrationNumberValidatorTest extends ValidatorTest
+class BusinessRegistrationNumberValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function setUp()
+    public function createValidator()
     {
-        parent::setUp();
-
-        $this->validator = new BusinessRegistrationNumberValidator();
-        $this->validator->initialize($this->context);
-
-        $this->constraint = new BusinessRegistrationNumber(
-            array('message' => $this->message)
-        );
+      return new BusinessRegistrationNumberValidator();
     }
 
-
-    public function testValidBusinessRegistrationNumberWithDash()
+    /**
+     * @dataProvider provideInvalidBusinessRegistrationNumbers
+     */
+    public function testInvalidBusinessRegistrationNumbers($value)
     {
-        $this->shouldBeValid('01-09-562739');
+        $this->validator->validate($value, new BusinessRegistrationNumber());
+        $this->buildViolation("It is not a valid business registration number")
+            ->assertRaised();
     }
 
-    public function testValidBusinessRegistrationNumberWithSpace()
+    public function provideInvalidBusinessRegistrationNumbers()
     {
-        $this->shouldBeValid('01 09 562739');
+        return [
+            ['01 090 562739'],
+            ['A1 09 562739'],
+            ['21 09 562739'],
+            ['01 33 562739'],
+        ];
     }
 
-    public function testValidBusinessRegistrationNumber()
+    /**
+     * @dataProvider provideValidBusinessRegistrationNumbers
+     */
+    public function testValidBusinessRegistrationNumbers($value)
     {
-        $this->shouldBeValid('0109562739');
+        $this->validator->validate($value, new BusinessRegistrationNumber());
+        $this->assertNoViolation();
     }
 
-    public function testInvalidFormat1()
+    public function provideValidBusinessRegistrationNumbers()
     {
-        $this->shouldNotBeValid('01 090 562739');
-    }
-
-    public function testInvalidFormat2()
-    {
-        $this->shouldNotBeValid('A1 09 562739');
-    }
-
-    public function testInvalidFirstPart()
-    {
-        $this->shouldNotBeValid('21 09 562739');
-    }
-
-    public function testInvalidSecondPart()
-    {
-        $this->shouldNotBeValid('01 33 562739');
+        return [
+            ['01-09-562739'],
+            ['01 09 562739'],
+            ['0109562739'],
+        ];
     }
 }

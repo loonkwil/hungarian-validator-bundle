@@ -14,13 +14,13 @@ composer.json fájlba:
       },
   ],
   "require": {
-      "spe/hungarian-validator-bundle": "dev-master",
+      "spe/hungarian-validator-bundle": "^1.0.0",
   }
 }
 ```
 
 ```bash
-php composer.phar update
+php composer.phar update spe/hungarian-validator-bundle
 ```
 
 ## Használata
